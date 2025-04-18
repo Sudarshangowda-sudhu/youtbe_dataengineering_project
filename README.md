@@ -1,124 +1,26 @@
 # youtbe_dataengineering_project
-YouTube Data Engineering Project on AWS
-
-This project demonstrates a complete data engineering pipeline built on AWS to ingest, transform, analyze, and visualize trending YouTube video data from multiple countries.
-
-Project Overview
-
-The main goal of this project is to:
-
-Securely manage structured and semi-structured data
-
-Optimize data processing in a scalable way
-
-Analyze data using serverless tools
-
-Deliver insights through visualizations
+Data Engineering YouTube Analysis Project by Darshil Parmar
+Overview
+This project aims to securely manage, streamline, and perform analysis on the structured and semi-structured YouTube videos data based on the video categories and the trending metrics.
 
 Project Goals
+Data Ingestion — Build a mechanism to ingest data from different sources
+ETL System — We are getting data in raw format, transforming this data into the proper format
+Data lake — We will be getting data from multiple sources so we need centralized repo to store them
+Scalability — As the size of our data increases, we need to make sure our system scales with it
+Cloud — We can’t process vast amounts of data on our local computer so we need to use the cloud, in this case, we will use AWS
+Reporting — Build a dashboard to get answers to the question we asked earlier
+Services we will be using
+Amazon S3: Amazon S3 is an object storage service that provides manufacturing scalability, data availability, security, and performance.
+AWS IAM: This is nothing but identity and access management which enables us to manage access to AWS services and resources securely.
+QuickSight: Amazon QuickSight is a scalable, serverless, embeddable, machine learning-powered business intelligence (BI) service built for the cloud.
+AWS Glue: A serverless data integration service that makes it easy to discover, prepare, and combine data for analytics, machine learning, and application development.
+AWS Lambda: Lambda is a computing service that allows programmers to run code without creating or managing servers.
+AWS Athena: Athena is an interactive query service for S3 in which there is no need to load data it stays in S3.
+Dataset Used
+This Kaggle dataset contains statistics (CSV files) on daily popular YouTube videos over the course of many months. There are up to 200 trending videos published every day for many locations. The data for each region is in its own file. The video title, channel title, publication time, tags, views, likes and dislikes, description, and comment count are among the items included in the data. A category_id field, which differs by area, is also included in the JSON file linked to the region.
 
-Ingestion: Ingest data from multiple formats (CSV and JSON)
+https://www.kaggle.com/datasets/datasnaek/youtube-new
 
-Data Lake: Store all data in a centralized S3 bucket
-
-ETL System: Clean, transform, and structure raw data
-
-Cloud-first: Use AWS to scale and automate
-
-Reporting: Create a Quicksight dashboard for visualization
-
-AWS Services Used
-
-Amazon S3: Store raw and clean data
-
-AWS IAM: Manage secure access to AWS resources
-
-AWS Glue: Discover schema and run ETL jobs
-
-AWS Lambda: Process and clean JSON data
-
-Amazon Athena: Query S3 data with SQL
-
-Amazon Quicksight: Create interactive dashboards
-
-Dataset
-
-Source: Kaggle - Trending YouTube Video Statistics
-(https://www.kaggle.com/datasets/datasnaek/youtube-new)
-
-Format:
-
-CSV for regional trending video stats
-
-JSON for category metadata
-
-Architecture & Workflow
-
-Data Ingestion
-
-Upload CSV and JSON files to S3 using AWS CLI
-
-Organize data in folders:
-
-raw_statistics/
-
-raw_statistics_reference_data/
-
-Schema Detection
-
-Use Glue Crawlers to infer schemas and create tables in the Data Catalog
-
-Data Cleaning & Transformation
-
-Use AWS Lambda to:
-
-Normalize JSON arrays (like items)
-
-Convert to Parquet
-
-Use AWS Glue Visual ETL to:
-
-Clean CSV data
-
-Change data types
-
-Store clean data in another S3 bucket
-
-Partition data by region or category_id
-
-Querying with Athena
-
-Run SQL queries on cleaned data
-
-Join JSON and CSV tables
-
-Store Athena results in a separate output bucket
-
-Data Modeling
-
-Use AWS Glue ETL to:
-
-Join raw and reference tables
-
-Create final analysis-ready tables
-
-Partition tables for performance
-
-Visualization
-
-Import final Athena table into Quicksight
-
-Create dashboards and charts for insights
-
-Sample Athena Query
-
-Join trending videos with category metadata:
-
-SELECT a.title, a.category_id, b.snippet_title
-FROM de_youtube_raw.raw_statistics a
-INNER JOIN de_youtube_raw.cleaned_statistics_reference_data b
-ON a.category_id = CAST(b.id AS INT)
-WHERE region = 'us';
-Schedule Glue ETL jobs
-
-Add time-series forecasting or anomaly detection using Quicksight
+Architecture Diagram
+![youtubepro_architecture](https://github.com/user-attachments/assets/9a424dfa-5737-4546-b345-9b9f98ca40e4)
